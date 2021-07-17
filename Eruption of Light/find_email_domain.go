@@ -1,9 +1,12 @@
 package main
 
-import "strings"
+import (
+	"strings"
+	"fmt"
+)
 
 func main() {
-	println(findEmailDomain("\"very.unusual.@.unusual.com\"@usual.com"))
+	fmt.Println(findEmailDomain("\"very.unusual.@.unusual.com\"@usual.com"))
 }
 
 func findEmailDomain(address string) string {

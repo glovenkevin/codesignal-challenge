@@ -5,7 +5,7 @@ import (
 )
 
 func main() {
-	fmt.print(buildPalindrome("abcdc")) // abcdcba
+	fmt.Println(buildPalindrome("abcdc")) // abcdcba
 }
 
 /* 

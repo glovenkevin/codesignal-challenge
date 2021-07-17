@@ -5,7 +5,7 @@ import (
 )
 
 func main() {
-	fmt.println(electionsWinners([2, 3, 5, 2], 2))
+	fmt.Println(electionsWinners([2, 3, 5, 2], 2))
 }
 
 func electionsWinners(votes []int, k int) int {

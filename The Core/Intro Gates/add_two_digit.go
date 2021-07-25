@@ -16,3 +16,7 @@ func addTwoDigits(n int) int {
 	obj2, _ := strconv.Atoi(arrStr[1])
 	return obj1 + obj2
 }
+
+func addTwoDigits2(n int) int {
+	return (n / 2) + (n % 2)
+}

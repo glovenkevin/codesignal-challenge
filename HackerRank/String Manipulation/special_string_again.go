@@ -2,12 +2,15 @@ package main
 
 import (
 	"fmt"
+	"math"
 )
 
 func main() {
-	// fmt.Println(substrCount(5, "asasd"))   // Expected: 7
+	// fmt.Println(substrCount(5, "aaaa")) // Expected: 10
+	// fmt.Println(substrCount(5, "asasd")) // Expected: 7
 	// fmt.Println(substrCount(7, "abcbaba")) // Expected: 10
-	fmt.Println(substrCount(4, "aaaa")) // Expected: 10
+	// fmt.Println(substrCount(4, "aaaa")) // Expected: 10
+	fmt.Println(substrCount(8, "mnonopoo")) // Expected: 12
 }
 
 /*
@@ -15,62 +18,58 @@ func main() {
 		- All of the characters are the same, e.g. aaa.
 		- All characters except the middle one are the same, e.g. aadaa.
 */
+
+type point struct {
+	key   rune
+	count int
+}
+
 func substrCount(n int32, s string) int64 {
 
 	var (
-		count    int64  = int64(n)
-		word     string = ""
-		idx      int32  = 2
-		startIdx int32  = 0
+		totalCount  int     = 0
+		count       int     = 0
+		pp          []point = []point{}
+		sizePp      int
+		idx         int = 1
+		currentRune rune
 	)
 
-	if isPalindrome(s) {
-		count++
-	}
+	for _, r := range s {
 
-	for idx < n {
-
-		if idx+startIdx <= n {
-
-			word = s[startIdx : idx+startIdx]
-			if isPalindrome(word) {
-				count++
-			}
-			startIdx++
-
-		} else {
-			idx++
-			startIdx = 0
+		if currentRune == 0 {
+			currentRune = r
+			count = 1
+			continue
 		}
 
+		if currentRune == r {
+			count++
+		}
+
+		if currentRune != r {
+			totalCount += (count * (count + 1) / 2)
+			p := point{key: currentRune, count: count}
+			pp = append(pp, p)
+
+			currentRune = r
+			count = 1
+		}
 	}
 
-	return count
-}
+	totalCount += (count * (count + 1) / 2)
+	p := point{key: currentRune, count: count}
+	pp = append(pp, p)
+	sizePp = len(pp)
 
-func isPalindrome(s string) bool {
-	return s == reverseSpecial(s)
-}
+	for idx < sizePp-1 {
 
-func reverseSpecial(s string) string {
-	strLen := len([]rune(s))
-	half := strLen / 2
-	newWord := ""
-	if strLen%2 == 1 {
-		half = (strLen + 1) / 2
-		newWord = s[half:] + s[half-1:half] + reverse(s[:half-1])
-	} else {
-		newWord = s[half:] + reverse(s[:half])
+		if pp[idx-1].key == pp[idx+1].key && pp[idx].count == 1 {
+			totalCount += int(math.Min(float64(pp[idx-1].count), float64(pp[idx+1].count)))
+		}
+
+		idx++
 	}
 
-	return newWord
-}
-
-func reverse(s string) string {
-	rs := []rune(s)
-	lenStr := len(rs)
-	for i, j := 0, lenStr-1; i < j; i, j = i+1, j-1 {
-		rs[i], rs[j] = rs[j], rs[i]
-	}
-	return string(rs)
+	return int64(totalCount)
 }

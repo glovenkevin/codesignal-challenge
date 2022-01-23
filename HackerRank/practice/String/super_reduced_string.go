@@ -6,6 +6,11 @@ func main() {
 	fmt.Println(superReducedString("aaabccddd")) // Expected: abd
 }
 
+/*
+	Another way to solve this is to replace all char that
+	match pattern regex /(\w)\1/g
+*/
+
 func superReducedString(s string) string {
 
 	rr := []rune(s)

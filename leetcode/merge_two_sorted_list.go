@@ -40,7 +40,7 @@ func main() {
 		l1 := CreateLinkedList(p.l1)
 		l2 := CreateLinkedList(p.l2)
 
-		res := mergeTwoLists(l1, l2)
+		res := mergeTwoListsSimpler(l1, l2)
 		var rr []int
 		for res != nil {
 			rr = append(rr, res.Val)
@@ -118,4 +118,28 @@ func merge(l1 *ListNode, l2 *ListNode, tail *ListNode) *ListNode {
 	}
 
 	return merge(l1, l2, tail)
+}
+
+func mergeTwoListsSimpler(list1 *ListNode, list2 *ListNode) *ListNode {
+	var tail = &ListNode{}
+	head := tail
+	for list1 != nil && list2 != nil {
+		if list1.Val > list2.Val {
+			tail.Next = list2
+			list2 = list2.Next
+			tail = tail.Next
+			continue
+		}
+
+		tail.Next = list1
+		list1 = list1.Next
+		tail = tail.Next
+	}
+
+	tail.Next = list2
+	if list1 != nil {
+		tail.Next = list1
+	}
+
+	return head.Next
 }

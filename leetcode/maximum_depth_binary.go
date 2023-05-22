@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 type TreeNode struct {
 	Val   int
 	Left  *TreeNode
@@ -8,6 +10,36 @@ type TreeNode struct {
 
 // source: https://leetcode.com/problems/maximum-depth-of-binary-tree/
 func main() {
+	tc := []struct {
+		root *TreeNode
+		res  int
+	}{
+		{
+			root: &TreeNode{
+				Val: 3,
+				Left: &TreeNode{
+					Val: 9,
+				},
+				Right: &TreeNode{
+					Val:   20,
+					Left:  &TreeNode{Val: 15},
+					Right: &TreeNode{Val: 7},
+				},
+			},
+			res: 3,
+		},
+	}
+
+	for _, t := range tc {
+		res := maxDepth(t.root)
+
+		if res == t.res {
+			fmt.Println("test success")
+			continue
+		}
+
+		fmt.Println("test failed")
+	}
 }
 
 func maxDepth(root *TreeNode) int {
@@ -15,9 +47,9 @@ func maxDepth(root *TreeNode) int {
 		return 0
 	}
 
-	var res, h int = 1, 1
-	checkDepth(root, &res, &h)
-	return res
+	var res, high int
+	checkDepth(root, &res, &high)
+	return high
 }
 
 func checkDepth(n *TreeNode, total *int, h *int) {
